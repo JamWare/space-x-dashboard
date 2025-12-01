@@ -1,5 +1,12 @@
 # SpaceX Dashboard - School assignment
 
+Deployed over there!
+[spacex-dashboard.com](https://space-x-dashboard-kappa.vercel.app/)
+...
+
+Okay I didn't go that far:
+https://space-x-dashboard-kappa.vercel.app/
+
 ## Mission
 
 This is a project using the free SpaceX API available on Github: https://github.com/r-spacex/SpaceX-API
@@ -79,7 +86,7 @@ npm install -g pnpm
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/JamWare/space-x-dashboard
 cd space-x-dashboard
 ```
 
