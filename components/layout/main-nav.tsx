@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NAV_GROUPS } from '@/lib/constants/navigation';
@@ -10,6 +10,23 @@ export function MainNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    }
+
+    if (openDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [openDropdown]);
 
   const isActive = (href: string) => {
     return pathname === href || pathname.startsWith(href + '/');
@@ -28,7 +45,7 @@ export function MainNav() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden md:block" ref={navRef}>
             <div className="flex items-center space-x-1">
               <Link
                 href="/"
@@ -45,8 +62,7 @@ export function MainNav() {
               {Object.entries(NAV_GROUPS).map(([key, group]) => (
                 <div key={key} className="relative">
                   <button
-                    onMouseEnter={() => setOpenDropdown(key)}
-                    onMouseLeave={() => setOpenDropdown(null)}
+                    onClick={() => setOpenDropdown(openDropdown === key ? null : key)}
                     className={cn(
                       'px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center',
                       group.items.some(item => isActive(item.href))
@@ -56,7 +72,10 @@ export function MainNav() {
                   >
                     {group.label}
                     <svg
-                      className="ml-1 h-4 w-4"
+                      className={cn(
+                        'ml-1 h-4 w-4 transition-transform',
+                        openDropdown === key && 'rotate-180'
+                      )}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -67,11 +86,7 @@ export function MainNav() {
 
                   {/* Dropdown */}
                   {openDropdown === key && (
-                    <div
-                      onMouseEnter={() => setOpenDropdown(key)}
-                      onMouseLeave={() => setOpenDropdown(null)}
-                      className="absolute left-0 z-10 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-900"
-                    >
+                    <div className="absolute left-0 z-10 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-900">
                       <div className="py-1">
                         {group.items.map((item) => (
                           <Link
