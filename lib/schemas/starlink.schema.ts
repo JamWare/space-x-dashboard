@@ -52,9 +52,9 @@ const StarlinkSpaceTrackSchema = z.object({
   PERIAPSIS: z.number(),          // km
 
   // Launch and location data
-  COUNTRY_CODE: z.string(),
-  LAUNCH_DATE: z.string(),        // YYYY-MM-DD format
-  SITE: z.string(),               // Launch facility code
+  COUNTRY_CODE: z.string().nullable(),
+  LAUNCH_DATE: z.string().nullable(),        // YYYY-MM-DD format
+  SITE: z.string().nullable(),               // Launch facility code
 
   // Status
   DECAYED: z.number(),            // 0 = active, 1 = deorbited
@@ -75,12 +75,12 @@ const StarlinkSpaceTrackSchema = z.object({
  * Zod schema for a single Starlink satellite
  */
 export const StarlinkSchema = z.object({
-  version: z.string(),             // e.g., "v1.0"
-  launch: z.string(),              // Launch ID reference
-  longitude: z.number(),           // -180 to 180
-  latitude: z.number(),            // -90 to 90
-  height_km: z.number(),           // Altitude above Earth
-  velocity_kms: z.number(),        // km/s
+  version: z.string().nullable(),  // e.g., "v1.0" (null if unknown)
+  launch: z.string().nullable(),   // Launch ID reference (null if unknown)
+  longitude: z.number().nullable(), // -180 to 180 (null if position unknown)
+  latitude: z.number().nullable(),  // -90 to 90 (null if position unknown)
+  height_km: z.number().nullable(), // Altitude above Earth (null if position unknown)
+  velocity_kms: z.number().nullable(), // km/s (null if position unknown)
   id: z.string(),                  // Unique identifier
   spaceTrack: StarlinkSpaceTrackSchema,
 });

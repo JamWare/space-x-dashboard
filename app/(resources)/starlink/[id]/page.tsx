@@ -76,38 +76,55 @@ export default function StarlinkDetailPage({ params }: StarlinkDetailPageProps) 
           <CardTitle>Current Position</CardTitle>
         </CardHeader>
         <CardContent>
-          <dl className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Latitude</dt>
-              <dd className="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">
-                {starlink.latitude.toFixed(4)}°
-              </dd>
+          {starlink.latitude !== null && starlink.longitude !== null &&
+           starlink.height_km !== null && starlink.velocity_kms !== null ? (
+            <dl className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Latitude</dt>
+                <dd className="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">
+                  {starlink.latitude.toFixed(4)}°
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Longitude</dt>
+                <dd className="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">
+                  {starlink.longitude.toFixed(4)}°
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Altitude</dt>
+                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                  {starlink.height_km.toFixed(2)} km
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Velocity</dt>
+                <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                  {starlink.velocity_kms.toFixed(2)} km/s
+                </dd>
+              </div>
+              {starlink.version && (
+                <div>
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Version</dt>
+                  <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                    {starlink.version}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          ) : (
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              <p>Position data is currently unavailable for this satellite.</p>
+              {starlink.version && (
+                <div className="mt-4">
+                  <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Version</dt>
+                  <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
+                    {starlink.version}
+                  </dd>
+                </div>
+              )}
             </div>
-            <div>
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Longitude</dt>
-              <dd className="mt-1 text-sm font-mono text-gray-900 dark:text-gray-100">
-                {starlink.longitude.toFixed(4)}°
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Altitude</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {starlink.height_km.toFixed(2)} km
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Velocity</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {starlink.velocity_kms.toFixed(2)} km/s
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Version</dt>
-              <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {starlink.version}
-              </dd>
-            </div>
-          </dl>
+          )}
         </CardContent>
       </Card>
 

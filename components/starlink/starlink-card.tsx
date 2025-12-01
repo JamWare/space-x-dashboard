@@ -50,22 +50,30 @@ export function StarlinkCard({ starlink }: StarlinkCardProps) {
               </svg>
               <span className="font-medium">{launchDate}</span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-gray-600 dark:text-gray-400">
+            {starlink.height_km !== null && starlink.velocity_kms !== null ? (
+              <div className="grid grid-cols-2 gap-2 text-gray-600 dark:text-gray-400">
+                <div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">Altitude</div>
+                  <div className="font-medium">{starlink.height_km.toFixed(2)} km</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 dark:text-gray-500">Velocity</div>
+                  <div className="font-medium">{starlink.velocity_kms.toFixed(2)} km/s</div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-sm text-gray-500 dark:text-gray-500">
+                Position data unavailable
+              </div>
+            )}
+            {starlink.latitude !== null && starlink.longitude !== null && (
               <div>
-                <div className="text-xs text-gray-500 dark:text-gray-500">Altitude</div>
-                <div className="font-medium">{starlink.height_km.toFixed(2)} km</div>
+                <div className="text-xs text-gray-500 dark:text-gray-500">Position</div>
+                <div className="font-mono text-gray-600 dark:text-gray-400">
+                  {starlink.latitude.toFixed(2)}°, {starlink.longitude.toFixed(2)}°
+                </div>
               </div>
-              <div>
-                <div className="text-xs text-gray-500 dark:text-gray-500">Velocity</div>
-                <div className="font-medium">{starlink.velocity_kms.toFixed(2)} km/s</div>
-              </div>
-            </div>
-            <div>
-              <div className="text-xs text-gray-500 dark:text-gray-500">Position</div>
-              <div className="font-mono text-gray-600 dark:text-gray-400">
-                {starlink.latitude.toFixed(2)}°, {starlink.longitude.toFixed(2)}°
-              </div>
-            </div>
+            )}
           </div>
         </CardContent>
       </Card>
