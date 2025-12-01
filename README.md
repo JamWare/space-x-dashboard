@@ -1,3 +1,53 @@
+# SpaceX Dashboard - School assignment
+
+## Mission
+
+This is a project using the free SpaceX API available on Github: https://github.com/r-spacex/SpaceX-API
+The data is old there, and not updated since 2/3 years, but it is good practice.
+
+## Architecture
+
+- React with NextJS
+- Optimistic updates
+- NextJS routing with a routing group
+- SWR to have a better fetching engine and improve the hooks
+- Charts using recharts
+- A map of the world with Starlink location using leaflet
+- ADR to explain some decisions app/ADR
+
+## Blocking point
+
+- Time. I took too much time doing tutorials.
+
+- No tests are included, but the usage of Typescript was enforced.
+
+- I used too much any on some of my TS files for conveniency, but it is bad practice.
+
+- Zod validation was also used for API verification during runtime and error handling.
+
+## Functionalities
+
+- Lists of: Launches, Rocket and rocket types, Starlinks with status (Active/Deorbited),
+- A lot of filters
+- Analytics with charts: Launch Success Rate (Pie Chart), Launches Over Time (Graph), Payload to Mass Distribution (Barchart).
+- A map of the world with Starlinks locations.
+
+## Was AI used?
+
+Yes, all the way, from the very beginning with architecture to **almost every page of this project**.
+
+I wrote the ADRs myself. What I typed most of the prompts. This first part of the README is by me.
+I fixed some very minor issues like some hard to read fonts and backgrounds, changed the position of
+divs to suit my taste but that's it.
+
+I used Claude Code with plan mode. It allows me to answer question to be sure that the implementations
+will go my way and it helps Claude with creating subagents to properly architecture the project and
+create the proper implementations.
+
+It helped me discover new things and know new ways to develop apps.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

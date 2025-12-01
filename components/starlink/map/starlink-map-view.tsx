@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Starlink } from '@/lib/schemas/starlink.schema';
-import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from "react";
+import { Starlink } from "@/lib/schemas/starlink.schema";
+import "leaflet/dist/leaflet.css";
 
 // Dynamic imports to avoid SSR issues
 let MapContainer: any;
@@ -22,9 +22,9 @@ export function StarlinkMapView({ satellites }: StarlinkMapViewProps) {
   useEffect(() => {
     // Dynamic imports for client-side only
     Promise.all([
-      import('react-leaflet'),
-      import('react-leaflet-cluster'),
-      import('leaflet'),
+      import("react-leaflet"),
+      import("react-leaflet-cluster"),
+      import("leaflet"),
     ]).then(([leaflet, cluster, leafletLib]) => {
       MapContainer = leaflet.MapContainer;
       TileLayer = leaflet.TileLayer;
@@ -37,10 +37,10 @@ export function StarlinkMapView({ satellites }: StarlinkMapViewProps) {
       delete (L.Icon.Default.prototype as any)._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl:
-          'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
         shadowUrl:
-          'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+          "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       });
 
       setIsClient(true);
@@ -95,42 +95,42 @@ export function StarlinkMapView({ satellites }: StarlinkMapViewProps) {
                     </h3>
                     <span
                       className={`text-xs ${
-                        isActive ? 'text-green-600' : 'text-gray-600'
+                        isActive ? "text-green-600" : "text-gray-600"
                       }`}
                     >
-                      {isActive ? 'Active' : 'Deorbited'}
+                      {isActive ? "Active" : "Deorbited"}
                     </span>
                   </div>
                   <div className="space-y-1 text-xs text-gray-600">
                     <div>
-                      <span className="font-medium">NORAD:</span>{' '}
+                      <span className="font-medium">NORAD:</span>{" "}
                       {satellite.spaceTrack.NORAD_CAT_ID}
                     </div>
                     <div>
-                      <span className="font-medium">Position:</span>{' '}
-                      {satellite.latitude!.toFixed(2)}°,{' '}
+                      <span className="font-medium">Position:</span>{" "}
+                      {satellite.latitude!.toFixed(2)}°,{" "}
                       {satellite.longitude!.toFixed(2)}°
                     </div>
                     <div>
-                      <span className="font-medium">Altitude:</span>{' '}
+                      <span className="font-medium">Altitude:</span>{" "}
                       {satellite.height_km!.toFixed(2)} km
                     </div>
                     {satellite.velocity_kms !== null && (
                       <div>
-                        <span className="font-medium">Velocity:</span>{' '}
+                        <span className="font-medium">Velocity:</span>{" "}
                         {satellite.velocity_kms.toFixed(2)} km/s
                       </div>
                     )}
                     {satellite.version && (
                       <div>
-                        <span className="font-medium">Version:</span>{' '}
+                        <span className="font-medium">Version:</span>{" "}
                         {satellite.version}
                       </div>
                     )}
                   </div>
                   <a
                     href={`/starlink/${satellite.id}`}
-                    className="mt-2 block rounded bg-blue-500 px-2 py-1 text-center text-xs text-white hover:bg-blue-600"
+                    className="mt-2 block rounded px-2 py-1 text-center text-xs hover:bg-white"
                   >
                     View Details →
                   </a>

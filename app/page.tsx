@@ -167,40 +167,6 @@ export default function Home() {
         </Card>
       </div>
 
-      {/* Featured: Starlink Map */}
-      <div>
-        <Link href="/starlink/map">
-          <Card className="cursor-pointer overflow-hidden border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 transition-all hover:scale-[1.02] hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:from-blue-950 dark:to-indigo-950">
-            <CardContent className="p-8">
-              <div className="flex flex-col items-center gap-6 md:flex-row">
-                <div className="flex-shrink-0 rounded-full bg-blue-100 p-6 dark:bg-blue-900">
-                  <div className="text-6xl">🗺️</div>
-                </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
-                    Starlink Satellite Map
-                  </h2>
-                  <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
-                    Explore real-time positions of Starlink satellites on an interactive world map
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-2 md:justify-start">
-                    <Badge variant="success">Live Tracking</Badge>
-                    <Badge variant="neutral">Interactive Filters</Badge>
-                    <Badge variant="neutral">Clustering</Badge>
-                  </div>
-                </div>
-                <div className="flex-shrink-0">
-                  <Button size="lg" className="gap-2">
-                    View Map
-                    <span>→</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
-
       {/* Quick Links */}
       <div>
         <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -268,6 +234,41 @@ export default function Home() {
             </Card>
           </Link>
         </div>
+      </div>
+
+      {/* Featured: Starlink Map */}
+      <div>
+        <Link href="/starlink/map">
+          <Card className="cursor-pointer overflow-hidden border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 transition-all hover:scale-[1.02] hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:from-blue-950 dark:to-indigo-950">
+            <CardContent className="p-8">
+              <div className="flex flex-col items-center gap-6 md:flex-row">
+                <div className="flex-shrink-0 rounded-full bg-blue-100 p-6 dark:bg-blue-900">
+                  <div className="text-6xl">🗺️</div>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    Starlink Satellite Map
+                  </h2>
+                  <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
+                    Explore real-time positions of Starlink satellites on an
+                    interactive world map
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+                    <Badge variant="success">Live Tracking</Badge>
+                    <Badge variant="neutral">Interactive Filters</Badge>
+                    <Badge variant="neutral">Clustering</Badge>
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <Button size="lg" className="gap-2">
+                    View Map
+                    <span>→</span>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       {/* Analytics Preview */}
