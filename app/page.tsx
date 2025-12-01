@@ -1,16 +1,45 @@
 'use client';
 
 import Link from 'next/link';
-import { useLatestLaunch, useNextLaunch } from '@/hooks/use-launches';
+import { useMemo } from 'react';
+import { useLatestLaunch, useNextLaunch, useLaunches } from '@/hooks/use-launches';
+import { usePayloads } from '@/hooks/use-payloads';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { LoadingSkeleton } from '@/components/ui/skeleton';
 import { formatDate, formatRelativeTime } from '@/lib/utils/format-date';
+import { LaunchSuccessChart } from '@/components/analytics/launch-success-chart';
+import { calculateSuccessRate } from '@/lib/utils/analytics';
+import { subMonths } from 'date-fns';
 
 export default function Home() {
   const { launch: latestLaunch, isLoading: latestLoading } = useLatestLaunch();
   const { launch: nextLaunch, isLoading: nextLoading } = useNextLaunch();
+  const { launches, isLoading: launchesLoading } = useLaunches();
+  const { payloads, isLoading: payloadsLoading } = usePayloads();
+
+  // Calculate analytics stats
+  const analyticsStats = useMemo(() => {
+    if (launches.length === 0) return null;
+
+    const successStats = calculateSuccessRate(launches);
+    const totalPayloadMass = payloads.reduce((sum, p) => sum + (p.mass_kg || 0), 0) / 1000;
+
+    // Get recent launches (last 12 months)
+    const twelveMonthsAgo = subMonths(new Date(), 12);
+    const recentLaunches = launches.filter(l => {
+      const launchDate = new Date(l.date_utc);
+      return launchDate >= twelveMonthsAgo && !l.upcoming;
+    });
+
+    return {
+      totalLaunches: successStats.total,
+      successRate: successStats.successRate,
+      totalPayloadMass: Math.round(totalPayloadMass * 10) / 10,
+      recentLaunches,
+    };
+  }, [launches, payloads]);
 
   return (
     <div className="space-y-12">
@@ -127,6 +156,90 @@ export default function Home() {
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Analytics Preview */}
+      <div>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Mission Analytics
+          </h2>
+          <Link href="/analytics">
+            <Button variant="outline" size="sm">
+              View All Analytics →
+            </Button>
+          </Link>
+        </div>
+
+        {launchesLoading || payloadsLoading ? (
+          <LoadingSkeleton count={3} />
+        ) : analyticsStats ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Success Rate Chart */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Success Rate</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <LaunchSuccessChart launches={launches} />
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Mission Stats</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Total Launches</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    {analyticsStats.totalLaunches.toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Success Rate</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    {analyticsStats.successRate}%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Payload Mass</p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    {analyticsStats.totalPayloadMass.toLocaleString()} t
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recent Activity */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Last 12 Months
+                  </p>
+                  <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                    {analyticsStats.recentLaunches.length}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500">
+                    launches completed
+                  </p>
+                  <Link href="/analytics">
+                    <Button variant="outline" size="sm" className="mt-4 w-full">
+                      View Details
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          <p className="text-gray-600 dark:text-gray-400">No analytics data available</p>
+        )}
       </div>
 
       {/* Quick Links */}
