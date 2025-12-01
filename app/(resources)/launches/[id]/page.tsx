@@ -165,6 +165,35 @@ export default function LaunchDetailPage({ params }: LaunchDetailPageProps) {
         </CardContent>
       </Card>
 
+      {/* Crew */}
+      {launch.crew.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Crew</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {launch.crew.map((member, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-gray-800"
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
+                      Crew Member {index + 1}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Role: {member.role}
+                    </p>
+                  </div>
+                  <Badge variant="neutral">ID: {member.crew.slice(0, 8)}</Badge>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Cores */}
       {launch.cores.length > 0 && (
         <Card>

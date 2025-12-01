@@ -1,6 +1,14 @@
 import { z } from 'zod';
 
 /**
+ * Zod schema for a crew member in a launch
+ */
+const LaunchCrewSchema = z.object({
+  crew: z.string(),
+  role: z.string(),
+});
+
+/**
  * Zod schema for a Launch core object
  */
 const LaunchCoreSchema = z.object({
@@ -73,7 +81,7 @@ export const LaunchSchema = z.object({
   success: z.boolean().nullable(),
   failures: z.array(FailureSchema),
   details: z.string().nullable(),
-  crew: z.array(z.string()),
+  crew: z.array(LaunchCrewSchema),
   ships: z.array(z.string()),
   capsules: z.array(z.string()),
   payloads: z.array(z.string()),
@@ -101,6 +109,7 @@ export const LaunchesArraySchema = z.array(LaunchSchema);
  * TypeScript type inferred from the Zod schema
  */
 export type Launch = z.infer<typeof LaunchSchema>;
+export type LaunchCrew = z.infer<typeof LaunchCrewSchema>;
 export type LaunchCore = z.infer<typeof LaunchCoreSchema>;
 export type LaunchLinks = z.infer<typeof LinksSchema>;
 export type LaunchFailure = z.infer<typeof FailureSchema>;
