@@ -219,19 +219,19 @@ export default function StarlinkDetailPage({ params }: StarlinkDetailPageProps) 
             <div>
               <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Launch Date</dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {formatDate(starlink.spaceTrack.LAUNCH_DATE, 'PPP')}
+                {starlink.spaceTrack.LAUNCH_DATE ? formatDate(starlink.spaceTrack.LAUNCH_DATE, 'PPP') : 'Unknown'}
               </dd>
             </div>
             <div>
               <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Launch Site</dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {starlink.spaceTrack.SITE}
+                {starlink.spaceTrack.SITE || 'Unknown'}
               </dd>
             </div>
             <div>
               <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">Country</dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-gray-100">
-                {starlink.spaceTrack.COUNTRY_CODE}
+                {starlink.spaceTrack.COUNTRY_CODE || 'Unknown'}
               </dd>
             </div>
             <div>

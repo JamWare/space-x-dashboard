@@ -28,6 +28,7 @@ export const NAV_GROUPS = {
     label: 'Data',
     items: [
       { href: '/starlink', label: 'Starlink' },
+      { href: '/starlink/map', label: 'Starlink Map' },
       { href: '/analytics', label: 'Analytics' },
     ]
   },

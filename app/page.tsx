@@ -1,17 +1,21 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useMemo } from 'react';
-import { useLatestLaunch, useNextLaunch, useLaunches } from '@/hooks/use-launches';
-import { usePayloads } from '@/hooks/use-payloads';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { LoadingSkeleton } from '@/components/ui/skeleton';
-import { formatDate, formatRelativeTime } from '@/lib/utils/format-date';
-import { LaunchSuccessChart } from '@/components/analytics/launch-success-chart';
-import { calculateSuccessRate } from '@/lib/utils/analytics';
-import { subMonths } from 'date-fns';
+import Link from "next/link";
+import { useMemo } from "react";
+import {
+  useLatestLaunch,
+  useNextLaunch,
+  useLaunches,
+} from "@/hooks/use-launches";
+import { usePayloads } from "@/hooks/use-payloads";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { LoadingSkeleton } from "@/components/ui/skeleton";
+import { formatDate, formatRelativeTime } from "@/lib/utils/format-date";
+import { LaunchSuccessChart } from "@/components/analytics/launch-success-chart";
+import { calculateSuccessRate } from "@/lib/utils/analytics";
+import { subMonths } from "date-fns";
 
 export default function Home() {
   const { launch: latestLaunch, isLoading: latestLoading } = useLatestLaunch();
@@ -24,11 +28,12 @@ export default function Home() {
     if (launches.length === 0) return null;
 
     const successStats = calculateSuccessRate(launches);
-    const totalPayloadMass = payloads.reduce((sum, p) => sum + (p.mass_kg || 0), 0) / 1000;
+    const totalPayloadMass =
+      payloads.reduce((sum, p) => sum + (p.mass_kg || 0), 0) / 1000;
 
     // Get recent launches (last 12 months)
     const twelveMonthsAgo = subMonths(new Date(), 12);
-    const recentLaunches = launches.filter(l => {
+    const recentLaunches = launches.filter((l) => {
       const launchDate = new Date(l.date_utc);
       return launchDate >= twelveMonthsAgo && !l.upcoming;
     });
@@ -83,7 +88,7 @@ export default function Home() {
                     {latestLaunch.name}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {formatDate(latestLaunch.date_utc, 'PPP')}
+                    {formatDate(latestLaunch.date_utc, "PPP")}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-500">
                     {formatRelativeTime(latestLaunch.date_utc)}
@@ -110,7 +115,9 @@ export default function Home() {
                 </Link>
               </div>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400">No data available</p>
+              <p className="text-gray-600 dark:text-gray-400">
+                No data available
+              </p>
             )}
           </CardContent>
         </Card>
@@ -133,7 +140,7 @@ export default function Home() {
                     {nextLaunch.name}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {formatDate(nextLaunch.date_utc, 'PPP')}
+                    {formatDate(nextLaunch.date_utc, "PPP")}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-500">
                     {formatRelativeTime(nextLaunch.date_utc)}
@@ -152,10 +159,115 @@ export default function Home() {
                 </Link>
               </div>
             ) : (
-              <p className="text-gray-600 dark:text-gray-400">No upcoming launches</p>
+              <p className="text-gray-600 dark:text-gray-400">
+                No upcoming launches
+              </p>
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Featured: Starlink Map */}
+      <div>
+        <Link href="/starlink/map">
+          <Card className="cursor-pointer overflow-hidden border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 transition-all hover:scale-[1.02] hover:border-blue-300 hover:shadow-lg dark:border-blue-900 dark:from-blue-950 dark:to-indigo-950">
+            <CardContent className="p-8">
+              <div className="flex flex-col items-center gap-6 md:flex-row">
+                <div className="flex-shrink-0 rounded-full bg-blue-100 p-6 dark:bg-blue-900">
+                  <div className="text-6xl">🗺️</div>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    Starlink Satellite Map
+                  </h2>
+                  <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">
+                    Explore real-time positions of Starlink satellites on an interactive world map
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+                    <Badge variant="success">Live Tracking</Badge>
+                    <Badge variant="neutral">Interactive Filters</Badge>
+                    <Badge variant="neutral">Clustering</Badge>
+                  </div>
+                </div>
+                <div className="flex-shrink-0">
+                  <Button size="lg" className="gap-2">
+                    View Map
+                    <span>→</span>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
+
+      {/* Quick Links */}
+      <div>
+        <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Explore SpaceX Data
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Link href="/launches">
+            <Card className="transition-all hover:scale-105">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <div className="mb-2 text-3xl">🚀</div>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Launches
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Past & upcoming missions
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/rockets">
+            <Card className="transition-all hover:scale-105">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <div className="mb-2 text-3xl">🛸</div>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Rockets
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Rocket specifications
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/starlink">
+            <Card className="transition-all hover:scale-105">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <div className="mb-2 text-3xl">🛰️</div>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Starlink
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Satellite constellation
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/analytics">
+            <Card className="transition-all hover:scale-105">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <div className="mb-2 text-3xl">📊</div>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Analytics
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Data visualizations
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
       </div>
 
       {/* Analytics Preview */}
@@ -192,19 +304,25 @@ export default function Home() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Total Launches</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Total Launches
+                  </p>
                   <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {analyticsStats.totalLaunches.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Success Rate</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Success Rate
+                  </p>
                   <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {analyticsStats.successRate}%
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Payload Mass</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Payload Mass
+                  </p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                     {analyticsStats.totalPayloadMass.toLocaleString()} t
                   </p>
@@ -238,61 +356,10 @@ export default function Home() {
             </Card>
           </div>
         ) : (
-          <p className="text-gray-600 dark:text-gray-400">No analytics data available</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            No analytics data available
+          </p>
         )}
-      </div>
-
-      {/* Quick Links */}
-      <div>
-        <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Explore SpaceX Data
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Link href="/launches">
-            <Card className="transition-all hover:scale-105">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="mb-2 text-3xl">🚀</div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Launches</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Past & upcoming missions</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-          <Link href="/rockets">
-            <Card className="transition-all hover:scale-105">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="mb-2 text-3xl">🛸</div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Rockets</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Rocket specifications</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-          <Link href="/starlink">
-            <Card className="transition-all hover:scale-105">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="mb-2 text-3xl">🛰️</div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Starlink</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Satellite constellation</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-          <Link href="/analytics">
-            <Card className="transition-all hover:scale-105">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="mb-2 text-3xl">📊</div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Analytics</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Data visualizations</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useStarlink } from '@/hooks/use-starlink';
 import { StarlinkCard } from '@/components/starlink/starlink-card';
 import { LoadingSkeleton } from '@/components/ui/skeleton';
@@ -39,11 +40,11 @@ export default function StarlinkPage() {
       let comparison = 0;
 
       if (sortBy === 'launch-date') {
-        const dateA = new Date(a.spaceTrack.LAUNCH_DATE).getTime();
-        const dateB = new Date(b.spaceTrack.LAUNCH_DATE).getTime();
+        const dateA = a.spaceTrack.LAUNCH_DATE ? new Date(a.spaceTrack.LAUNCH_DATE).getTime() : 0;
+        const dateB = b.spaceTrack.LAUNCH_DATE ? new Date(b.spaceTrack.LAUNCH_DATE).getTime() : 0;
         comparison = dateB - dateA;
       } else if (sortBy === 'altitude') {
-        comparison = b.height_km - a.height_km;
+        comparison = (b.height_km ?? 0) - (a.height_km ?? 0);
       } else if (sortBy === 'name') {
         comparison = a.spaceTrack.OBJECT_NAME.localeCompare(b.spaceTrack.OBJECT_NAME);
       }
@@ -79,13 +80,20 @@ export default function StarlinkPage() {
   return (
     <div>
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
-          Starlink Satellites
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Track SpaceX&apos;s constellation of internet satellites in real-time
-        </p>
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+            Starlink Satellites
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Track SpaceX&apos;s constellation of internet satellites in real-time
+          </p>
+        </div>
+        <Link href="/starlink/map">
+          <Button variant="outline" size="sm">
+            Map View
+          </Button>
+        </Link>
       </div>
 
       {/* Filters */}

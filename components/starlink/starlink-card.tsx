@@ -10,7 +10,7 @@ interface StarlinkCardProps {
 
 export function StarlinkCard({ starlink }: StarlinkCardProps) {
   const isActive = starlink.spaceTrack.DECAYED === 0;
-  const launchDate = formatDate(starlink.spaceTrack.LAUNCH_DATE, 'PP');
+  const launchDate = starlink.spaceTrack.LAUNCH_DATE ? formatDate(starlink.spaceTrack.LAUNCH_DATE, 'PP') : 'Unknown';
 
   return (
     <Link href={`/starlink/${starlink.id}`}>
