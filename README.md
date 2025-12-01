@@ -3,11 +3,12 @@
 ## Mission
 
 This is a project using the free SpaceX API available on Github: https://github.com/r-spacex/SpaceX-API
-The data is old there, and not updated since 2/3 years, but it is good practice.
+The data is old there, and not updated since 2/3 years ago, but it is good practice.
 
 ## Architecture
 
 - React with NextJS
+- Used pnpm package manager because it's just better
 - Optimistic updates
 - NextJS routing with a routing group
 - SWR to have a better fetching engine and improve the hooks
@@ -15,15 +16,22 @@ The data is old there, and not updated since 2/3 years, but it is good practice.
 - A map of the world with Starlink location using leaflet
 - ADR to explain some decisions app/ADR
 
+## Tools
+
+- Claude Code CLI on a side
+- VS Code without Copilot on the other
+- Next.JS documentation
+- React documentation
+- Stackoverflow
+- Tailwind, I'm used to it and I like it
+
 ## Blocking point
 
-- Time. I took too much time doing tutorials.
+- Time. I took too much time practicing on tutorials.
 
 - No tests are included, but the usage of Typescript was enforced.
 
-- I used too much any on some of my TS files for conveniency, but it is bad practice.
-
-- Zod validation was also used for API verification during runtime and error handling.
+- I used too much "any" on some of my TS files for conveniency, but it is bad practice.
 
 ## Functionalities
 
@@ -31,12 +39,14 @@ The data is old there, and not updated since 2/3 years, but it is good practice.
 - A lot of filters
 - Analytics with charts: Launch Success Rate (Pie Chart), Launches Over Time (Graph), Payload to Mass Distribution (Barchart).
 - A map of the world with Starlinks locations.
+- Zod validation for API verification during runtime and error handling.
 
 ## Was AI used?
 
 Yes, all the way, from the very beginning with architecture to **almost every page of this project**.
 
-I wrote the ADRs myself. What I typed most of the prompts. This first part of the README is by me.
+I made the commits and wrote the messages myself using VS Code UI, 19 when I was writing this.
+I wrote the ADRs myself. I typed most of the prompts. This first part of the README is by me.
 I fixed some very minor issues like some hard to read fonts and backgrounds, changed the position of
 divs to suit my taste but that's it.
 
@@ -44,29 +54,56 @@ I used Claude Code with plan mode. It allows me to answer question to be sure th
 will go my way and it helps Claude with creating subagents to properly architecture the project and
 create the proper implementations.
 
-It helped me discover new things and know new ways to develop apps.
+It helped me discover new things and know new ways to develop apps. A little more details
+on app/ADR/ai-usage.md
 
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Installation and Setup
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- pnpm (this project uses pnpm as the package manager)
+
+If you don't have pnpm installed, you can install it globally:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install -g pnpm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation Steps
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd space-x-dashboard
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Run the development server:
+
+```bash
+pnpm dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+The page auto-updates as you edit files in the `app/` directory.
+
+### Other Available Commands
+
+- **Build for production**: `pnpm build`
+- **Run production server**: `pnpm start` (requires build first)
+- **Lint code**: `pnpm lint`
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

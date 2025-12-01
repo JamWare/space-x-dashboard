@@ -12,7 +12,6 @@ Accepted
 ## Context
 
 I spent too much time on online tutorials to learn next.js. I started the project in itself a bit too late.
-The school is giving us a lot of work lately.
 
 ## Decision
 
